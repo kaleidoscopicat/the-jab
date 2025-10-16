@@ -1,3 +1,7 @@
+# @name: compadre.py
+# @desc: Rigs the Santa game, and uses a hex-encoded file to store information for rigging.
+#        Intended to be used as a module to be imported!
+
 import random
 import os
 import struct
@@ -51,5 +55,3 @@ def readCompadre():
 def boot(triesToReset):
     if not os.path.exists(compadreFile):
         writeCompadre(1, triesToReset)
-
-boot(triesToReset=3)
