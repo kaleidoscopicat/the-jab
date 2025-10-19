@@ -6,7 +6,6 @@
 ## | Merged "generate_hitbox_based_of_of_image.py" && "import_spritesheet.py"
 
 import pygame
-from main import _hitbox_cache
 
 def load_spritesheet_images(spritesheet_path, sprite_width, sprite_height, frames_per_row, total_frames=None,
                             scale=None):
@@ -55,6 +54,10 @@ def load_spritesheet_images(spritesheet_path, sprite_width, sprite_height, frame
             row += 1
 
     return images
+
+#Leave this here to break a circular import
+
+_hitbox_cache = {}
 
 def generate_hitbox(image, x, y):
     cache_key = (image.get_size(), id(image))

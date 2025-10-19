@@ -11,12 +11,14 @@ cwd = os.getcwd()
 win = pygame.display.set_mode((0,0),0,pygame.FULLSCREEN)
 
 def Assets():
-    files = os.listdir(os.path.join(cwd, 'assets'))
+    files = os.listdir(os.path.join(cwd, 'game\\assets'))
     preloadedAssets = {}
 
     for file in files:
         path, ext = file.split(os.path.extsep)
-        path=os.path.basename(path)
+
+        #Honestly, use a space before and after an "="
+        path = os.path.basename(path)
 
         if ext in image_types:
             preloadedAssets[path] = pygame.image.load(file)

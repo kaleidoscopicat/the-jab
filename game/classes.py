@@ -3,6 +3,8 @@
 
 import pygame
 from game.globals import win
+from game.helpers.ImageHelper import generate_hitbox
+
 
 class screen_object(pygame.sprite.Sprite):
     def __init__(self, x, y, sprite, has_spritesheet = False, sprite_index: int =None):
@@ -23,12 +25,15 @@ class screen_object(pygame.sprite.Sprite):
         elif self.has_spritesheet is True:
             win.blit(self.sprite[self.sprite_index],(self.x,self.y))
 
-class player(screen_object):
+class Player(screen_object):
     def __init__(self, x: float, y: float, sprite, vel=5):
         super().__init__(x, y , sprite)
         self.vel = vel
         self.x = x
         self.y = y
+        self.falling = False
+        self.vel_y = 0
+        self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
 
     def update(self):
         keys_pressed = pygame.key.get_pressed()
@@ -37,12 +42,31 @@ class player(screen_object):
 
         elif keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]:
             self.x += self.vel
+        
+        if self.falling is True:
+            self.vel_y += 0.8
+            self.y += self.vel_y
+        else:
+            self.vel_y = 0
 
+        self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
         self.draw()
-
+    
     def draw(self):
         if self.has_spritesheet is False:
             win.blit(self.sprite,(self.x, self.y))
 
         elif self.has_spritesheet is True:
               win.blit(self.sprite[self.sprite_index],(self.x, self.y))
+
+class Floor(screen_object):
+    def __init__(self,x,y,spr):
+        super().__init__(x,y,spr,False,None)
+        self.hitbox = generate_hitbox(spr, x, y)
+
+    def update(self):
+        self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
+        self.draw()
+
+    def draw(self):
+        win.blit(self.sprite, (self.x, self.y))

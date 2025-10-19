@@ -1,6 +1,6 @@
 import os
 
-from game.classes import player, screen_object
+from game.classes import Player, screen_object, Floor
 from game.globals import win, Assets
 
 try:
@@ -12,9 +12,9 @@ pygame.display.set_caption("Present catcher")
 run = True
 
 preloaded_images = Assets()
-player = player(500,500, preloaded_images["player"])
+print(preloaded_images)
+player = Player(500,500, preloaded_images["player"])
 
-_hitbox_cache = {}
 screen_objects = []
 
 screen_objects.append(player)
@@ -29,6 +29,15 @@ while run:
     for obj in screen_objects:
         if isinstance(obj, screen_object):
             obj.update()
+
+            if isinstance(obj, Player):
+                obj.falling = True
+
+                #Floor collision - may need improvement later but idrc rn
+                for floor in screen_objects:
+                    if isinstance(floor, Floor) and obj.hitbox.colliderect(floor.hitbox):
+                            obj.falling = True
+                            break
 
     pygame.display.update()
 pygame.quit()
