@@ -12,14 +12,13 @@ pygame.display.set_caption("Present catcher")
 run = True
 
 preloaded_images = Assets()
-print(preloaded_images)
-player = Player(500,500, preloaded_images["player"])
 
-screen_objects = []
-
-screen_objects.append(player)
+screen_objects = [Player(500,500, preloaded_images["player"]),Floor(0,600,preloaded_images["floor"])]
 
 while run:
+    if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+        run = False
+
     win.fill((0,0,0))
 
     for event in pygame.event.get():
@@ -36,7 +35,7 @@ while run:
                 #Floor collision - may need improvement later but idrc rn
                 for floor in screen_objects:
                     if isinstance(floor, Floor) and obj.hitbox.colliderect(floor.hitbox):
-                            obj.falling = True
+                            obj.falling = False
                             break
 
     pygame.display.update()
