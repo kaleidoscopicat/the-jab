@@ -29,11 +29,17 @@ class Player(screen_object):
     def __init__(self, x: float, y: float, sprite, vel=5):
         super().__init__(x, y , sprite)
         self.vel = vel
-        self.x = x
-        self.y = y
+        self.x: float = x
+        self.y: float = y
         self.falling = False
-        self.vel_y = 0
+        self.vel_y: float = 0
         self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
+        self.on_floor: bool = False
+
+        #Gravity constants
+        self.jump_strength: float = -25
+        self.max_fall_speed: float = 5
+        self.gravity: float = 2
 
     def update(self):
         keys_pressed = pygame.key.get_pressed()
@@ -42,9 +48,19 @@ class Player(screen_object):
 
         elif keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]:
             self.x += self.vel
-        
-        if self.falling is True:
-            self.vel_y += 0.8
+
+        if (keys_pressed[pygame.K_SPACE] or keys_pressed[pygame.K_w] or
+            keys_pressed[pygame.K_UP]) and self.on_floor:
+            self.vel_y = self.jump_strength
+            self.on_floor = False
+
+
+        if self.falling or not self.on_floor:
+            self.vel_y += self.gravity
+
+            if self.vel_y > self.max_fall_speed:
+                self.vel_y = self.max_fall_speed
+
             self.y += self.vel_y
         else:
             self.vel_y = 0
