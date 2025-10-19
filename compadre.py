@@ -55,3 +55,5 @@ def readCompadre():
 def boot(triesToReset):
     if not os.path.exists(compadreFile):
         writeCompadre(1, triesToReset)
+
+print(str(readCompadre()))

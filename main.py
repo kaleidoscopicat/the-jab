@@ -1,33 +1,25 @@
 import os
 
-from game.classes.player import player
-from game.object import screen_object
-from game.win import win
+from game.classes import player, screen_object
+from game.globals import win, Assets
 
 try:
     import pygame
-except Exception as e:
+except ModuleNotFoundError as e:
     os.system("pip install pygame --user")
-
 
 pygame.display.set_caption("Present catcher")
 run = True
-win = win
-preloaded_images = [
-    pygame.image.load("game/assets/player.png")
 
-]
+preloaded_images = Assets()
+player = player(500,500, preloaded_images["player"])
 
-player = player(500,500, preloaded_images[0])
-
-
-_hitbox_cache:dict = {}
+_hitbox_cache = {}
 screen_objects = []
 
 screen_objects.append(player)
 
 while run:
-
     win.fill((0,0,0))
 
     for event in pygame.event.get():

@@ -1,7 +1,27 @@
-import pygame
+## @last-modified: 12:59 19/10/25
+## | Merged 'classes' directory into classes.py
 
-from game.object import screen_object
-from game.win import win
+import pygame
+from game.globals import win
+
+class screen_object(pygame.sprite.Sprite):
+    def __init__(self, x, y, sprite, has_spritesheet = False, sprite_index: int =None):
+        super().__init__()
+        self.x: float = x
+        self.y: float = y
+        self.sprite = sprite
+        self.has_spritesheet = has_spritesheet
+        self.sprite_index = sprite_index
+
+    def update(self):
+        self.draw()
+
+    def draw(self):
+        if self.has_spritesheet is False:
+            win.blit(self.sprite,(self.x,self.y))
+
+        elif self.has_spritesheet is True:
+            win.blit(self.sprite[self.sprite_index],(self.x,self.y))
 
 class player(screen_object):
     def __init__(self, x: float, y: float, sprite, vel=5):
@@ -11,7 +31,6 @@ class player(screen_object):
         self.y = y
 
     def update(self):
-
         keys_pressed = pygame.key.get_pressed()
         if keys_pressed[pygame.K_a] or keys_pressed[pygame.K_LEFT]:
             self.x -= self.vel
