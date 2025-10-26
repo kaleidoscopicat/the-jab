@@ -13,20 +13,29 @@ except ModuleNotFoundError as e:
 pygame.display.set_caption("Present catcher")
 run = True
 
+pygame.init()
+
 preloaded_images = Assets()
 
 screen_objects = [Player(500,500, preloaded_images["player"]),
                   Floor(0,600,preloaded_images["floor"]),
                   Floor(500,500,preloaded_images["floor"]),
-                  Present(random.randint(0,2000), 0, 5, preloaded_images["present"])
+                  Present(random.randint(0,1000), 0, 5, preloaded_images["present"])
                   ]
 presents = []
+
+score = 0
+score_font = pygame.font.SysFont("comic_sans", 30)
+score_text = score_font.render(f"Score: {score}", True, (255,0,0))
 
 while run:
     if pygame.key.get_pressed()[pygame.K_ESCAPE]:
         run = False
 
     win.fill((0,0,0))
+
+    score_text = score_font.render(f"Score: {score}", True, (255, 0, 0))
+    win.blit(score_text, (80,50))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,7 +67,8 @@ while run:
                 for present in presents:
                     if present.hitbox.colliderect(obj.hitbox):
                         screen_objects.remove(present)
-                        screen_objects.append(Present(random.randrange(0,2000),0, 5, preloaded_images["present"]))
+                        screen_objects.append(Present(random.randrange(0,1000),0, 5, preloaded_images["present"]))
+                        score += 1
 
             if isinstance(obj, Present):
 
