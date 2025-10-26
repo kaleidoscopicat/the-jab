@@ -1,6 +1,5 @@
 import os
 import random
-import time
 
 from game.classes import Player, screen_object, Floor, Present
 from game.globals import win, Assets
@@ -19,7 +18,7 @@ preloaded_images = Assets()
 
 screen_objects = [Player(500,500, preloaded_images["player"]),
                   Floor(0,600,preloaded_images["floor"]),
-                  Floor(500,500,preloaded_images["floor"]),
+                  Floor(500,600,preloaded_images["floor"]),
                   Present(random.randint(0,1000), 0, 5, preloaded_images["present"])
                   ]
 presents = []
