@@ -49,11 +49,6 @@ class Player(screen_object):
         elif keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]:
             self.x += self.vel
 
-        if (keys_pressed[pygame.K_SPACE] or keys_pressed[pygame.K_w] or
-            keys_pressed[pygame.K_UP]) and self.on_floor:
-            self.vel_y = self.jump_strength
-            self.on_floor = False
-
 
         if self.falling or not self.on_floor:
             self.vel_y += self.gravity
