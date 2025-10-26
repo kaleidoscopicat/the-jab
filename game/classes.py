@@ -86,3 +86,24 @@ class Floor(screen_object):
 
     def draw(self):
         win.blit(self.sprite, (self.x, self.y))
+
+class Present(screen_object):
+    def __init__(self, x, y, vel: float, sprite):
+        super().__init__(x, y, vel, sprite)
+        self.x = x
+        self.y = y
+        self.sprite = pygame.transform.scale(sprite,(50,50))
+        self.falling: bool = True
+        self.vel: float = vel
+        self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
+
+    def update(self):
+        self.draw()
+
+        if self.falling is True:
+            self.y += 10
+
+        self.hitbox = generate_hitbox(self.sprite, self.x, self.y)
+
+    def draw(self):
+        win.blit(self.sprite, (self.x,self.y))

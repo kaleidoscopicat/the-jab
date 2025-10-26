@@ -43,3 +43,6 @@ print(str(compadre.readCompadre()))
 
 **Known Issues**
 * ?
+
+**And yet it's still too complicated for me**
+* Jasper I blame you
