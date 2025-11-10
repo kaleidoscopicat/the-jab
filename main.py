@@ -1,6 +1,7 @@
 import os
 import random
 
+
 from game.classes import Player, screen_object, Floor, Present
 from game.globals import win, Assets
 
